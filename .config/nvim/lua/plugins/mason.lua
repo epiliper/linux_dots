@@ -15,8 +15,8 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"pylsp",
-				"clangd",
 				"rust_analyzer",
+				"clangd",
 				"tailwindcss",
 				"ruff_lsp",
 				"emmet_language_server",
