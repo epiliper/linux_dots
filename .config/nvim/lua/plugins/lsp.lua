@@ -162,10 +162,6 @@ return {
 			}
 		})
 
-		lspconfig["ruff_lsp"].setup {
-			on_attach = on_attach,
-		}
-
 		lspconfig["rust_analyzer"].setup({
 			capabilites = capabilities,
 			on_attach = on_attach,
@@ -197,18 +193,6 @@ return {
 		})
 
 		lspconfig['emmet_language_server'].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			handlers = handlers,
-		})
-
-		lspconfig['texlab'].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			handlers = handlers,
-		})
-
-		lspconfig['typst_lsp'].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			handlers = handlers,

@@ -18,9 +18,7 @@ return {
 				"rust_analyzer",
 				"clangd",
 				"tailwindcss",
-				"ruff_lsp",
-				"emmet_language_server",
-				"typst_lsp",
+				"emmet_language_server"
 			},
 		})
 	end,
