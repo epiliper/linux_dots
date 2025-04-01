@@ -28,8 +28,15 @@ vim.o.termguicolors = true
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.numberwidth = 4
-vim.opt.fillchars:append { eob = " " }
+vim.opt.fillchars:append({ eob = " " })
 vim.opt.scrolloff = 10
+vim.api.nvim_set_option("synmaxcol", 200)
+vim.opt.cmdheight = 0
+
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
 
 vim.cmd("hi! Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi! NonText guibg=NONE ctermbg=NONE")
@@ -40,17 +47,12 @@ vim.cmd("hi! LineNr guibg=NONE ctermbg=NONE")
 vim.cmd("hi! SignColumn guibg=NONE ctermbg=NONE")
 vim.cmd("colorscheme everforest")
 
--- colorscheme
-vim.api.nvim_set_option("synmaxcol", 200)
-
-cmdheight = 0
-
 -- telescope configuration
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>fd', builtin.diagnostics, {})
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
 
-require('colorizer').setup()
+require("colorizer").setup()

@@ -1,6 +1,6 @@
 local check_backspace = function()
-	local col = vim.fn.col "." - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+	local col = vim.fn.col(".") - 1
+	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
 return {
@@ -8,13 +8,13 @@ return {
 	lazy = false,
 	config = function()
 		cmp = require("cmp")
-		luasnip = require('luasnip')
-		require('luasnip.loaders.from_vscode').lazy_load()
+		luasnip = require("luasnip")
+		require("luasnip.loaders.from_vscode").lazy_load()
 		cmp.setup({
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
-				{ name = "cmp_r" }
+				{ name = "cmp_r" },
 			},
 			window = {
 				completion = cmp.config.window.bordered(),
@@ -26,13 +26,13 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-k>'] = cmp.mapping.select_prev_item(),
-				['<C-j>'] = cmp.mapping.select_next_item(),
-				['<C-b>'] = cmp.mapping.scroll_docs(-4),
-				['<C-f>'] = cmp.mapping.scroll_docs(4),
-				['<C-o>'] = cmp.mapping.complete(),
-				['<C-e>'] = cmp.mapping.abort(),
-				['<CR>'] = cmp.mapping.confirm({ select = true }),
+				["<C-k>"] = cmp.mapping.select_prev_item(),
+				["<C-j>"] = cmp.mapping.select_next_item(),
+				["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				["<C-f>"] = cmp.mapping.scroll_docs(4),
+				["<C-o>"] = cmp.mapping.complete(),
+				["<C-e>"] = cmp.mapping.abort(),
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
 
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
@@ -63,37 +63,34 @@ return {
 					"s",
 				}),
 			}),
-
 		})
-
-
 		-- borders!
 		-- Specify how the border looks like
 		local border = {
-			{ '┌', 'FloatBorder' },
-			{ '─', 'FloatBorder' },
-			{ '┐', 'FloatBorder' },
-			{ '│', 'FloatBorder' },
-			{ '┘', 'FloatBorder' },
-			{ '─', 'FloatBorder' },
-			{ '└', 'FloatBorder' },
-			{ '│', 'FloatBorder' },
+			{ "┌", "FloatBorder" },
+			{ "─", "FloatBorder" },
+			{ "┐", "FloatBorder" },
+			{ "│", "FloatBorder" },
+			{ "┘", "FloatBorder" },
+			{ "─", "FloatBorder" },
+			{ "└", "FloatBorder" },
+			{ "│", "FloatBorder" },
 		}
 
 		-- Add the border on hover and on signature help popup window
 		local handlers = {
-			['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-			['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help,
-				{ border = border }),
+			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 		}
 
 		-- Add border to the diagnostic popup window
 		vim.diagnostic.config({
 			virtual_text = {
-				prefix = '■ ', -- Could be '●', '▎', 'x', '■', , 
+				prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
 			},
 			float = { border = border },
-			update_in_insert = false,
+			-- update_in_insert = true,
+			-- virtual_lines = true
 		})
 
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -101,7 +98,7 @@ return {
 		local keymap = vim.keymap
 		local opts = { noremap = true, silent = true }
 		local on_attach = function(client, bufnr)
-			require("lsp-format").on_attach(client, bufnr)
+			-- require("lsp-format").on_attach(client, bufnr)
 			opts.buffer = bufnr
 			opts.desc = "Show LSP references"
 			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
@@ -151,15 +148,29 @@ return {
 			handlers = handlers,
 		})
 
-		lspconfig['jedi_language_server'].setup({
+		-- lspconfig['jedi_language_server'].setup({
+		lspconfig["basedpyright"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			root_dir = function()
+				return vim.fn.getcwd()
+			end,
 			handlers = handlers,
 			settings = {
-				python = {
-					pythonPath = "/home/eli/stuff/python/default"
-				}
-			}
+				basedpyright = {
+					analysis = {
+						diagnosticSeverityOverrides = {
+							reportUnknownVariableType = "none", -- Unknown variable types
+							reportUnknownParameterType = "none", -- Unknown parameter types
+							reportUnknownMemberType = "none", -- Unknown member types
+							reportMissingTypeStubs = "none", -- Missing type stubs for third-party libraries
+							reportUnknownArgumentType = "none", -- Unknown argument types
+							reportGeneralTypeIssues = "none", -- General type issues (broader category)
+							reportUnusedExpression = "none",
+						},
+					},
+				},
+			},
 		})
 
 		lspconfig["rust_analyzer"].setup({
@@ -174,31 +185,25 @@ return {
 			handlers = handlers,
 		})
 
-		lspconfig['tailwindcss'].setup({
+		lspconfig["tailwindcss"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			handlers = handlers,
 		})
 
-		lspconfig['ts_ls'].setup({
+		lspconfig["html"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			handlers = handlers,
 		})
 
-		lspconfig['html'].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			handlers = handlers
-		})
-
-		lspconfig['emmet_language_server'].setup({
+		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			handlers = handlers,
 		})
 
-		lspconfig['clangd'].setup({
+		lspconfig["clangd"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			handlers = handlers,

@@ -1,17 +1,17 @@
 return {
-	'mfussenegger/nvim-dap',
+	"mfussenegger/nvim-dap",
 	dependences = {
-		'rcarriga/nvim-dap-ui'
+		"rcarriga/nvim-dap-ui",
 	},
 	lazy = true,
 	config = function()
 		local dap = require("dap")
 		require("eli.remap")
 		local dapui = require("dapui")
-		vim.keymap.set("n", "<leader>dt", ':DapToggleBreakpoint<CR>')
-		vim.keymap.set("n", "<leader>dx", ':DapTerminate<CR>')
-		vim.keymap.set("n", "<leader>dc", ':DapContinue<CR>')
-		vim.keymap.set("n", "<leader>do", ':DapStepOver<CR>')
+		vim.keymap.set("n", "<leader>dt", ":DapToggleBreakpoint<CR>")
+		vim.keymap.set("n", "<leader>dx", ":DapTerminate<CR>")
+		vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>")
+		vim.keymap.set("n", "<leader>do", ":DapStepOver<CR>")
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
 		end
@@ -25,24 +25,23 @@ return {
 			dapui.close()
 		end
 		dap.adapters.lldb = {
-			type = 'executable',
-			command = '/usr/bin/lldb',
-			name = 'lldb'
+			type = "executable",
+			command = "/usr/bin/lldb",
+			name = "lldb",
 		}
 
 		dap.configurations.cpp = {
 			{
-				name = 'Launch',
-				type = 'lldb',
-				request = 'launch',
+				name = "Launch",
+				type = "lldb",
+				request = "launch",
 				program = function()
-					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+					return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 				end,
-				cwd = '${workspaceFolder}',
+				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
 				args = {},
 			},
-
 		}
 		dap.configurations.c = dap.configurations.cpp
 		dap.configurations.rust = dap.configurations.cpp

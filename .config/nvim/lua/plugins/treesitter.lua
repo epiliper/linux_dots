@@ -15,11 +15,12 @@ return {
 				"rust",
 				"r",
 				"bash",
-				"go"
+				"go",
+				"sql"
 			},
 			sync_install = false,
 			highlight = { enable = true },
-			indent = { enable = false },
+			indent = { enable = true },
 		})
 	end,
 }

@@ -14,11 +14,12 @@ return {
 		mason_lspconfig.setup({
 			ensure_installed = {
 				"lua_ls",
-				"pylsp",
+				"basedpyright",
 				"rust_analyzer",
 				"clangd",
 				"tailwindcss",
-				"emmet_language_server"
+				"emmet_language_server",
+				"ts_ls"
 			},
 		})
 	end,
